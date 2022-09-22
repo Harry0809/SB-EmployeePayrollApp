@@ -18,37 +18,38 @@ public class EmployeeController {
     List<EmployeeData> list = new ArrayList<>();
 
     //Save Data
+
         @PostMapping("/save")
-        public EmployeeData save(@RequestBody EmployeeData employeeData) {
+         public EmployeeData save(@RequestBody EmployeeData employeeData) {
             return employeeService.saveData(employeeData);
         }
 
+    //Find data by Id
+
         @GetMapping("/find/{id}")
-        public Optional<EmployeeData> findById(@PathVariable int id){
+         public Optional<EmployeeData> findById(@PathVariable int id){
             return employeeService.findById(id);
         }
 
-        // showing all employee details
+    // showing all employee details
 
         @GetMapping("/list")
-    public List<EmployeeData> show(){
+         public List<EmployeeData> show(){
             return employeeService.display();
         }
 
-        /*
-        @PutMapping("/edit/{id}")
-    public EmployeeData edit(@RequestBody EmployeeData employeeData, @PathVariable int id){
-            return employeeService.update(employeeData , id);
-        }
-        */
+    //update Employee Data
 
-    //delete by id
+        @PutMapping("/update")
+         public EmployeeData updateData(@RequestBody EmployeeData employeeData){
+            return employeeService.update(employeeData);
+    }
+
+    //Delete by id
 
         @DeleteMapping("/delete/{id}")
           public String delete(@PathVariable int id){
             return employeeService.deleteById(id);
         }
-
-
 }
 

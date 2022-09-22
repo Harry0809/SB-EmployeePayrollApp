@@ -23,10 +23,9 @@ public class EmployeeService {
     public List<EmployeeData> display() {
         return employeeRepo.findAll();
     }
-
-    /*
-    public EmployeeData update(EmployeeData employeeData, int id) {
-        EmployeeData employeeData1 = employeeRepo.findBy(id).get();
+/*
+    public EmployeeData update(EmployeeData employeeData) {
+        EmployeeData employeeData1 = employeeRepo.findBy(employeeData.getId());
         if (employeeRepo.findBy(id).ispresent()) {
             employeeData1.setFirstName(employeeData.getFirstName());
             employeeData1.setLastName(employeeData.getLastName());
@@ -40,8 +39,6 @@ public class EmployeeService {
         }
 
      */
-
-
     public String deleteById(int id) {
         Optional<EmployeeData> employeeID = employeeRepo.findById(id);
         if(employeeID.isPresent()) {
@@ -49,11 +46,23 @@ public class EmployeeService {
             return "Employee data deleted";
         }
         else {
-            return " id is not found";
+            return " id is NOT found";
         }
     }
 
     public Optional<EmployeeData> findById(int id) {
         return employeeRepo.findById(id);
+    }
+
+    public EmployeeData update(EmployeeData employeeData){
+        EmployeeData existingData = employeeRepo.findById(employeeData.getId()).orElse(null);
+        existingData.setFirstName(employeeData.getFirstName());
+        existingData.setLastName(employeeData.getLastName());
+        existingData.setGender(employeeData.getGender());
+        existingData.setMessage(employeeData.getMessage());
+        existingData.setDepartment(employeeData.getDepartment());
+        existingData.setSalary(employeeData.getSalary());
+        return employeeRepo.save(existingData);
+
     }
 }
